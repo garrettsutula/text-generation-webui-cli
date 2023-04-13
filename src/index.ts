@@ -24,6 +24,7 @@ async function processPromptReplaceList() {
     console.log(`⚙️ (${count}/${promptReplaceArr.length}) - Starting: "${basePrompt}"`)
     const output = await text2text(prompt);
     outputArr.push(output.replace(prompt, ''));
+    count += 1;
   }
   console.log(`✅ ${promptReplaceArr.length} prompts generated successfully!!!`);
   await writeFile('./output.txt', outputArr.join('\n\n\n'))
