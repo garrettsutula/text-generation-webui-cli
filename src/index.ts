@@ -1,14 +1,33 @@
 import { readFile, writeFile } from "fs/promises";
 import yargs from 'yargs';
 
-import { text2text } from './text2text';
+import { text2text, configureParameters } from './text2text';
 
 const argv = yargs(process.argv.slice(2)).options({
-  baseUrl: {type: 'string', default: 'ws://192.168.0.29:7860/queue/join'},
-  prompt: {type: 'string', require: true},
-  softPromptPath: {type: 'string'},
-  promptReplacePath: {type: 'string'},
- }).parseSync();
+  baseUrl: { type: 'string', default: 'ws://192.168.0.29:7860/queue/join' },
+  prompt: { type: 'string', require: true },
+  softPromptPath: { type: 'string' },
+  promptReplacePath: { type: 'string' },
+  max_new_tokens: { type: 'number', default: 200 },
+  seed: { type: 'number', default: -1 },
+  temperature: { type: 'number', default: 0.7 },
+  top_p: { type: 'number', default: 0.1 },
+  top_k: { type: 'number', default: 40 },
+  typical_p: { type: 'number', default: 1 },
+  repetition_penalty: { type: 'number', default: 1.18 },
+  encoder_repetition_penalty: { type: 'number', default: 1 },
+  no_repeat_ngram_size: { type: 'number', default: 0 },
+  min_length: { type: 'number', default: 0 },
+  do_sample: { type: 'boolean', default: true },
+  penalty_alpha: { type: 'number', default: 0 },
+  num_beams: { type: 'number', default: 1 },
+  length_penalty: { type: 'number', default: 1 },
+  early_stopping: { type: 'boolean', default: false },
+  add_bos_token: { type: 'boolean', default: true },
+  ban_bos_token: { type: 'boolean', default: false },
+  truncation_length: { type: 'number', default: 2048 },
+  custom_stopping_strings: { type: 'string', default: "" }
+}).parseSync();
 
 const outputArr: string[] = [];
 let count = 1;
@@ -36,6 +55,22 @@ async function processPromptReplaceList() {
     console.error(`Error loading prompt replace from path: ${argv.promptReplacePath}`);
     console.error(e);
   }
+
+  // Argument order is determined based upon the order they are defined in the gradio app config shown here: https://github.com/oobabooga/text-generation-webui/blob/28a11f57244f130f346b560cfd78bc0c47351e9a/server.py#L347-L406
+  let paramOrder = [
+    "max_new_tokens", "seed", "temperature", "top_p", "top_k", "typical_p",
+    "repetition_penalty", "encoder_repetition_penalty", "no_repeat_ngram_size",
+    "min_length", "do_sample", "penalty_alpha", "num_beams", "length_penalty",
+    "early_stopping", "add_bos_token", "ban_bos_token", "truncation_length",
+    "custom_stopping_strings"
+  ]
+
+  let params: Array<any> = [];
+  for (let i = 0, il = paramOrder.length; i < il; i++) {
+    params.push(argv[paramOrder[i]]);
+  }
+
+  await configureParameters(params, argv.baseUrl);
 
   if (promptReplaceArr.length) {
     for (const promptReplace of promptReplaceArr) {
