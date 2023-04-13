@@ -1,0 +1,38 @@
+{
+  "name": "ws-prompt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garrettsutula/ws-prompt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/garrettsutula/ws-prompt/issues"
+  },
+  "homepage": "https://github.com/garrettsutula/ws-prompt#readme",
+  "dependencies": {
+    "axios": "^1.3.2",
+    "glob": "^8.1.0",
+    "uuid": "^9.0.0",
+    "ws": "^8.13.0",
+    "yaml": "^2.2.1",
+    "yargs": "^17.6.2"
+  },
+  "devDependencies": {
+    "@tsconfig/node16": "^1.0.3",
+    "@types/glob": "^8.0.1",
+    "@types/node": "^18.11.18",
+    "@types/uuid": "^9.0.0",
+    "@types/ws": "^8.5.4",
+    "@types/yargs": "^17.0.22",
+    "typescript": "^4.9.5"
+  }
+}
