@@ -6,6 +6,7 @@ Basic CLI tool for using the [Text Generation Web UI](https://github.com/oobaboo
 1. Clone this Repository.
 2. Run `npm i` to install project dependencies.
 3. Run `npm build` to build the project.
+4. Run the script locally like `node ./dist/index.js --prompt "whatever"`
 
 ## CLI Args
 
