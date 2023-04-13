@@ -2,7 +2,10 @@
   "name": "ws-prompt",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "bin": {
+    "textgen-cli": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
@@ -24,7 +27,7 @@
     "uuid": "^9.0.0",
     "ws": "^8.13.0",
     "yaml": "^2.2.1",
-    "yargs": "^17.6.2"
+    "yargs": "^17.7.1"
   },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.3",

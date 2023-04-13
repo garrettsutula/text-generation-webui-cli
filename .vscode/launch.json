@@ -15,7 +15,8 @@
       "preLaunchTask": "tsc: build - tsconfig.json",
       "outFiles": [
         "${workspaceFolder}/dist/**/*.js"
-      ]
+      ],
+      "args": ["--prompt", "test prompt", "--baseUrl", "ws://192.168.0.29:7861/queue/join"]
     }
   ]
 }

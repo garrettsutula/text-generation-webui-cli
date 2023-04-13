@@ -10,8 +10,8 @@ export function sendPrompt(queue: WebSocket, prompt: string) {
   return prompt;
 }
 
-export function text2text(prompt: string): Promise<string> {
-  const queue = new WebSocket('ws://192.168.0.29:7861/queue/join');
+export function text2text(prompt: string, baseUrl: string): Promise<string> {
+  const queue = new WebSocket(baseUrl);
 
   return new Promise((resolve, reject) => {
     queue.on('error', (err) => {
