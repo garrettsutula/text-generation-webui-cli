@@ -12,7 +12,8 @@ Basic CLI tool for using the [Text Generation Web UI](https://github.com/oobaboo
 
 | Flag                                                        | Default                          | Description |
 |-------------------------------------------------------------|----------------------------------|-------------|
-| `--prompt`                                                  |                                  | Pass the desired prompt **Required** |
+| `--prompt PROMPT`                                           |                                  | Pass the desired prompt **Required** |
+| `--model MODEL`                                             |                                  | Change to the specified model prior to passing the prompt |
 | `--baseUrl BASE_URL`                                        | `ws://127.0.0.1:7860/queue/join` | the websocket "join" URL |
 | `--softPromptPath SOFT_PROMPT_PATH`                         |                                  | Loads a template to wrap the prompt, must contain `__prompt__` which will be replaced with the prompt value |
 | `--promptReplacePath PROMPT_REPLACE_PATH`                   |                                  | Loads and parses a newline-limited list of values to generate output for each value. The prompt must contain the string `__replace__` which will be (logically) replaced with a value in the list for each generation |

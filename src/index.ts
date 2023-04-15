@@ -1,11 +1,12 @@
 import { readFile, writeFile } from "fs/promises";
 import yargs from 'yargs';
 
-import { text2text, configureParameters } from './text2text';
+import { text2text, configureParameters, setModel } from './text2text';
 
 const argv = yargs(process.argv.slice(2)).options({
   baseUrl: { type: 'string', default: 'ws://192.168.0.29:7860/queue/join' },
   prompt: { type: 'string', require: true },
+  model: { type: 'string' },
   softPromptPath: { type: 'string' },
   promptReplacePath: { type: 'string' },
   max_new_tokens: { type: 'number', default: 200 },
@@ -26,7 +27,7 @@ const argv = yargs(process.argv.slice(2)).options({
   add_bos_token: { type: 'boolean', default: true },
   ban_bos_token: { type: 'boolean', default: false },
   truncation_length: { type: 'number', default: 2048 },
-  custom_stopping_strings: { type: 'string', default: "" }
+  custom_stopping_strings: { type: 'string', default: "" },
 }).parseSync();
 
 const outputArr: string[] = [];
@@ -71,6 +72,10 @@ async function processPromptReplaceList() {
   }
 
   await configureParameters(params, argv.baseUrl);
+
+  if (argv.model) {
+    await setModel(argv.model, argv.baseUrl);
+  }
 
   if (promptReplaceArr.length) {
     for (const promptReplace of promptReplaceArr) {
