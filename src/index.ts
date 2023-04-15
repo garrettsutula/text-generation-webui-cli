@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "fs/promises";
 import yargs from 'yargs';
 
-import { text2text, configureParameters, setModel } from './text2text';
+import { text2text, configureParameters, setModel, updateModelParameters } from './text2text';
 
 const argv = yargs(process.argv.slice(2)).options({
   baseUrl: { type: 'string', default: 'ws://192.168.0.29:7860/queue/join' },
@@ -28,6 +28,17 @@ const argv = yargs(process.argv.slice(2)).options({
   ban_bos_token: { type: 'boolean', default: false },
   truncation_length: { type: 'number', default: 2048 },
   custom_stopping_strings: { type: 'string', default: "" },
+  gpu_memory_0: { type: 'number', default: 0 },
+  cpu_memory: { type: 'number', default: 0 },
+  auto_devices: { type: 'boolean', default: true },
+  disk: { type: 'boolean', default: false },
+  cpu: { type: 'boolean', default: false },
+  bf16: { type: 'boolean', default: false },
+  load_in_8bit: { type: 'boolean', default: false },
+  wbits: { type: 'number', default: 4, choices: ["None", 1, 2, 3, 4, 8] },
+  groupsize: { type: 'number', default: 128, choices: ["None", 32, 64, 128] },
+  model_type: { type: 'string', default: "None", choices: ["None", "llama", "opt", "gptj"] },
+  pre_layer: { type: 'number', default: 0 },
 }).parseSync();
 
 const outputArr: string[] = [];
@@ -64,7 +75,7 @@ async function processPromptReplaceList() {
     "min_length", "do_sample", "penalty_alpha", "num_beams", "length_penalty",
     "early_stopping", "add_bos_token", "ban_bos_token", "truncation_length",
     "custom_stopping_strings"
-  ]
+  ];
 
   let params: Array<any> = [];
   for (let i = 0, il = paramOrder.length; i < il; i++) {
@@ -74,6 +85,16 @@ async function processPromptReplaceList() {
   await configureParameters(params, argv.baseUrl);
 
   if (argv.model) {
+    let modelParamOrder = [
+      "gpu_memory_0", "cpu_memory", "auto_devices", "disk", "cpu", "bf16",
+      "load_in_8bit", "wbits", "groupsize", "model_type", "pre_layer",
+    ];
+    let modelParams: Array<any> = [];
+    for (let j = 0, jl = modelParamOrder.length; j < jl; j++) {
+      modelParams.push(argv[modelParamOrder[j]]);
+    }
+    // Set the model parameters prior to changing it as that's what triggers the update
+    await updateModelParameters(modelParams, argv.baseUrl);
     await setModel(argv.model, argv.baseUrl);
   }
 

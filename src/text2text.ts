@@ -2,8 +2,10 @@ import { WebSocket } from "ws";
 const sessionHash = Math.floor(Math.random() * (2 ** 31 - 1) + 1);
 const paramsFnIndex = 6;
 const replyFnIndex = 7;
+const modelParamsFnIndex = 19;
 const modelFnIndex = 20;
 
+//{"fn_index":19,"data":[0,true,false,false,false,false,4,128,"None",0,0],"event_data":null,"session_hash":"gfdzf1d5gss"}
 function doConversation(data: Array<any>, baseUrl: string, fnIndex: number, eventData: any = null): Promise<string> {
   const queue = new WebSocket(baseUrl);
 
@@ -35,6 +37,10 @@ function doConversation(data: Array<any>, baseUrl: string, fnIndex: number, even
       }
     });
   });
+}
+
+export function updateModelParameters(data: Array<any>, baseUrl: string): Promise<string> {
+  return doConversation(data, baseUrl, modelParamsFnIndex);
 }
 
 export function configureParameters(data: Array<any>, baseUrl: string): Promise<string> {
