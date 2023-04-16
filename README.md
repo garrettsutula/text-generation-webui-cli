@@ -12,7 +12,8 @@ Basic CLI tool for using the [Text Generation Web UI](https://github.com/oobaboo
 
 | Flag                                                        | Default                          | Description |
 |-------------------------------------------------------------|----------------------------------|-------------|
-| `--prompt`                                                  |                                  | Pass the desired prompt **Required** |
+| `--prompt PROMPT`                                           |                                  | Pass the desired prompt **Required** |
+| `--model MODEL`                                             |                                  | Change to the specified model prior to passing the prompt |
 | `--baseUrl BASE_URL`                                        | `ws://127.0.0.1:7860/queue/join` | the websocket "join" URL |
 | `--softPromptPath SOFT_PROMPT_PATH`                         |                                  | Loads a template to wrap the prompt, must contain `__prompt__` which will be replaced with the prompt value |
 | `--promptReplacePath PROMPT_REPLACE_PATH`                   |                                  | Loads and parses a newline-limited list of values to generate output for each value. The prompt must contain the string `__replace__` which will be (logically) replaced with a value in the list for each generation |
@@ -35,3 +36,14 @@ Basic CLI tool for using the [Text Generation Web UI](https://github.com/oobaboo
 | `--ban_bos_token true|false`                                | `false`                          | See: [HuggingFace Generation Config](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig) |
 | `--truncation_length TRUNCATION_LENGTH`                     | `2048`                           | See: [HuggingFace Generation Config](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig) |
 | `--custom_stopping_strings CUSTOM_STOPPING_STRINGS`         | `""`                             | See: [HuggingFace Generation Config](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig) |
+| `--gpu_memory_0 0...MAX_VRAM`                               | `0`                             | See: [HuggingFace Generation Config](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig) |
+| `--cpu_memory 0...MAX_CPU`                                  | `""`                             | See: [HuggingFace Generation Config](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig) |
+| `--auto_devices true|false`                                 | `""`                             | See: [HuggingFace Generation Config](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig) |
+| `--disk true|false`                                         | `""`                             | See: [HuggingFace Generation Config](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig) |
+| `--cpu true|false`                                          | `""`                             | See: [HuggingFace Generation Config](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig) |
+| `--bf16 true|false`                                         | `""`                             | See: [HuggingFace Generation Config](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig) |
+| `--load_in_8bit true|false`                                 | `""`                             | See: [HuggingFace Generation Config](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig) |
+| `--wbits 1|2|3|4|8`                                         | `""`                             | See: [HuggingFace Generation Config](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig) |
+| `--groupsize 32|64|128`                                     | `""`                             | See: [HuggingFace Generation Config](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig) |
+| `--model_type None|llama|opt|gptj`                          | `""`                             | See: [HuggingFace Generation Config](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig) |
+| `--pre_layer 0...100`                                       | `""`                             | See: [HuggingFace Generation Config](https://huggingface.co/docs/transformers/main_classes/text_generation#transformers.GenerationConfig) |
